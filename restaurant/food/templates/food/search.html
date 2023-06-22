@@ -1,0 +1,80 @@
+<!-- search.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 16px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tile {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tile h3 {
+            margin-top: 0;
+        }
+
+        .tile p {
+            margin-bottom: 5px;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dishes Search</h1>
+    <form method="GET" action="{% url 'food:dish' %}">
+        <input type="text" name="q" placeholder="Search for a food item">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if query_provided %}
+        <h2>Search Results for "{{ query_provided }}"</h2>
+        {% if item_names %}
+            {% for item_name in item_names %}
+                <div class="tile">
+                    <h3>{{ item_name }}</h3>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="error-message">No items found for "{{ query_provided }}".</p>
+        {% endif %}
+    {% endif %}
+
+    {% if error_message %}
+        <p class="error-message">Error: {{ error_message }}</p>
+    {% endif %}
+</body>
+</html>
